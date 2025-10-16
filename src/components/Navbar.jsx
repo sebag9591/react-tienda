@@ -1,5 +1,7 @@
 import React from 'react';   
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
+// Utilizo NavLink en los enlaces del navbar para que sea más facil el control de navegación y saber cual está activo
  
 function Navbar() {   
     return (   
@@ -7,11 +9,15 @@ function Navbar() {
             <nav>
                 <ul className='nav justify-content-center'>   
                     <li className='nav-item'>
-                        <Link to={'/'} className='nav-link px-2 link-body-emphasis'>Inicio</Link>                        
+                        <NavLink to={'/'} className={({ isActive }) => 
+                            "nav-link px-2 " + (isActive ? "link-body-emphasis fw-bold" : "link-body-emphasis")
+                        }>Inicio</NavLink>                        
                     </li>  
 
                     <li className='nav-item'>
-                        <Link to={'/nosotros'} className='nav-link px-2 link-body-emphasis'>Nosotros</Link>                        
+                        <NavLink to={'/nosotros'} className={({ isActive }) => 
+                            "nav-link px-2 " + (isActive ? "link-body-emphasis fw-bold" : "link-body-emphasis")
+                        }>Nosotros</NavLink>                        
                     </li> 
                 </ul> 
             </nav>
