@@ -1,14 +1,18 @@
-import React from 'react';   
+import React, { useContext } from 'react';
+import { CarritoContext } from '../context/CarritoContext';   
 
-const Carrito = ({ productosEnCarrito, productosEliminados }) => {   
+const Carrito = () => {   
+
+    const {carrito, eliminarProductoDelCarrito} = useContext(CarritoContext);
+
     return (   
         <div className='container mb-5' style={{ paddingBottom: "30px" }}>
             <h1 id='carrito'>Carrito</h1>
 
-            {productosEnCarrito.length === 0 ? (
+            {carrito.length === 0 ? (
                 <p>El carrito se encuentra vacío</p>
             ) : (
-                productosEnCarrito.map((producto, indice) => (
+                carrito.map((producto, indice) => (
                     <div key={indice}>
                         <div className='card mb-3 p-3'>
                             <div className='row g-0'>
@@ -31,7 +35,7 @@ const Carrito = ({ productosEnCarrito, productosEliminados }) => {
                                         </div>
                                         <div className='col'>
                                             <button 
-                                                onClick={() => productosEliminados(indice)} 
+                                                onClick={() => eliminarProductoDelCarrito(indice)} 
                                                 className="btn btn-danger">
                                                 Eliminar
                                             </button>

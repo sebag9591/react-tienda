@@ -1,9 +1,11 @@
 import React from 'react';   
 import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../context/AuthContext';
  
 const Header = () => {
-    
+    const {user, logout} = useAuthContext();
+    const estaLogeado = !!user;
     
 
     return (
@@ -18,8 +20,16 @@ const Header = () => {
                 {/* Menú */}
                 <Navbar />
 
+
                 <div className="col-md-3 text-end"> 
-                    <a className="btn " href="#carrito" role="button"><i className="bi bi-cart"></i> </a>
+                    { estaLogeado ? 
+                        <button onClick={logout} className='btn btn-link'>Cerrar Sesion </button> 
+                        :
+                        <Link to="/login">
+                            <button className='btn btn-link'>Iniciar sesión</button>
+                        </Link>
+                    }
+                     <Link to={'/#carrito'} className='btn'><i className="bi bi-cart"></i></Link>
                 </div> 
             </header>
         </div>

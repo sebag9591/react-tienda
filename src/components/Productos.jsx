@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { CarritoContext } from '../context/CarritoContext';   
 
 // Le paso como parámetro la función que permite manejar estado del carrito
-const Productos = ({ agregarProducto }) => {
+const Productos = () => {
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
+
+    // Usar el contexto
+    const {agregarProductoAlCarrito} = useContext(CarritoContext)
 
     const apiURL = 'https://fakestoreapi.com/products';
 
@@ -60,7 +64,7 @@ const Productos = ({ agregarProducto }) => {
                                                             <h3 className="card-text">${producto.price}</h3>
                                                             <button
                                                                 className="w-100 btn btn-primary mt-auto"
-                                                                onClick={() => agregarProducto(producto)}
+                                                                onClick={() => agregarProductoAlCarrito(producto)}
                                                             >
                                                                 <i className="bi bi-cart-plus" /> Agregar al carrito
                                                             </button>
