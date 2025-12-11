@@ -1,11 +1,14 @@
-import React from 'react';   
+import React, { useContext } from 'react';   
 import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
- 
+import { CarritoContext } from '../context/CarritoContext';
+
 const Header = () => {
+    const { carrito } = useContext(CarritoContext);
     const {user, logout} = useAuthContext();
     const estaLogeado = !!user;
+    const contadorEnCarrito = carrito.length;
     
 
     return (
@@ -29,7 +32,14 @@ const Header = () => {
                             <button className='btn btn-link'>Iniciar sesión</button>
                         </Link>
                     }
-                     <Link to={'/#carrito'} className='btn'><i className="bi bi-cart"></i></Link>
+                     <Link to={'/#carrito'} className='btn '><i className="bi bi-cart position-relative">
+                        {contadorEnCarrito > 0 && (
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {contadorEnCarrito}
+                                    <span class="visually-hidden">productos en carrito</span>
+                                </span>
+                        )}
+                        </i></Link>
                 </div> 
             </header>
         </div>

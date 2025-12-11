@@ -18,7 +18,7 @@ const Carrito = () => {
                             <div className='row g-0'>
                                 <div className='col-md-4 d-flex align-items-center justify-content-center'>
                                     <img
-                                        src={producto.image}
+                                        src={producto.imagen}
                                         className="img-fluid rounded-start"
                                         alt={producto.title}
                                         style={{
@@ -31,7 +31,7 @@ const Carrito = () => {
                                 <div className='col-md-8'>
                                     <div className='row'>
                                         <div className='col-9'>
-                                            {producto.title} : <span className='fw-bold'>${producto.price}</span>
+                                            {producto.nombre} : <span className='fw-bold'>${producto.precio}</span>
                                         </div>
                                         <div className='col'>
                                             <button 

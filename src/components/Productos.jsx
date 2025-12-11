@@ -11,7 +11,7 @@ const Productos = () => {
     // Usar el contexto
     const {agregarProductoAlCarrito} = useContext(CarritoContext)
 
-    const apiURL = 'https://fakestoreapi.com/products';
+    const apiURL = 'https://68d5d328e29051d1c0afa9ab.mockapi.io/producto';
 
     useEffect(() => {
         fetch(apiURL)
@@ -48,9 +48,9 @@ const Productos = () => {
                                                 <div className="row g-2 h-100">
                                                     <div className="col-md-4 d-flex align-items-center">
                                                         <img
-                                                            src={producto.image}
+                                                            src={producto.imagen}
                                                             className="img-fluid rounded-start"
-                                                            alt={producto.title}
+                                                            alt={producto.nombre}
                                                             style={{
                                                                 objectFit: 'contain',
                                                                 height: '100%',
@@ -61,7 +61,7 @@ const Productos = () => {
                                                     <div className="col-md-8 d-flex flex-column justify-content-between">
                                                         <div className="card-body">
                                                             <Link to={`/producto/${producto.id}`} className='card-text px-2 link-body-emphasis link-offset-2 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-50-hover'>{producto.title}</Link> 
-                                                            <h3 className="card-text">${producto.price}</h3>
+                                                            <h3 className="card-text">${producto.precio}</h3>
                                                             <button
                                                                 className="w-100 btn btn-primary mt-auto"
                                                                 onClick={() => agregarProductoAlCarrito(producto)}

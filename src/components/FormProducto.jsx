@@ -9,6 +9,7 @@ const FormProducto = ({onAgregar}) => {
         nombre: '', 
         precio: '', 
         descripcion: '', 
+        imagen: '', 
     }); 
  
 
@@ -95,3 +96,5 @@ const FormProducto = ({onAgregar}) => {
         </form> 
   ); 
 }
+
+export default FormProducto;

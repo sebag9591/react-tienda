@@ -24,13 +24,13 @@ function App() {
             <Route path={'/nosotros'} element={<Nosotros />} />
             <Route path="/login" element={<Login />} />
             <Route path={'/producto/:id'} element={<ProductoDetalle />} />
-            <Route path="/carrito"  element={
+            <Route path={"/carrito"}  element={
                 <RutaProtegida >
                   <Carrito />
                 </RutaProtegida>
               }
             />
-            <Route path="/admin" element={
+            <Route path={"/admin"} element={
                 <RutaProtegida >
                   <Admin />
                 </RutaProtegida>

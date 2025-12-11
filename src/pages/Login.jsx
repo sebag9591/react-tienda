@@ -7,13 +7,14 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const { login } = useAuthContext();
     const navigate = useNavigate();
+    
     const handleSubmit = (e) => {
     
         e.preventDefault();
         // Simulación de autenticación
         if (user === 'admin' && password === '1234') {
             login(user);
-            navigate('/');
+            navigate('/admin');
         } else {
             alert('Credenciales incorrectas');
         }
