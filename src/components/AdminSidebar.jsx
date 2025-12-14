@@ -24,7 +24,7 @@ const AdminSidebar = () => {
         <div className=" d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
 
           {/* Menu principal */}
-          <Link to={'/#carrito'} className='btn d-flex align-items-center gap-2'>
+          <Link to={'/admin'} className='btn d-flex align-items-center gap-2'>
             <i className="bi bi-cart  position-relative">
             
             </i> 

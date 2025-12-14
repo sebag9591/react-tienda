@@ -1,5 +1,6 @@
 import FormProducto from "./FormProducto";
 import AdminSidebar from "./AdminSidebar";
+import AdminProductos from "./AdminProductos";
 
 const Admin = () => {
   const API = 'https://68d5d328e29051d1c0afa9ab.mockapi.io/producto';
@@ -39,7 +40,7 @@ const Admin = () => {
             <h1>Gestión de Productos</h1>
 
           </div>
-            <FormProducto onAgregar={agregarProducto} />
+            <AdminProductos />
         </main>
       </div>
       
