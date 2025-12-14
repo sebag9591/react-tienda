@@ -1,4 +1,5 @@
 import FormProducto from "./FormProducto";
+import AdminSidebar from "./AdminSidebar";
 
 const Admin = () => {
   const API = 'https://68d5d328e29051d1c0afa9ab.mockapi.io/producto';
@@ -27,10 +28,24 @@ const Admin = () => {
   };
 
   return (
-    <div>
-      <h1>Gestión de Productos</h1>
-      <FormProducto onAgregar={agregarProducto} />
+    <>
+    <div className='container-fluid'>
+      <div className='row'>
+        
+          <AdminSidebar />
+        
+        <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1>Gestión de Productos</h1>
+
+          </div>
+            <FormProducto onAgregar={agregarProducto} />
+        </main>
+      </div>
+      
     </div>
+    
+    </>
   );
 };
 

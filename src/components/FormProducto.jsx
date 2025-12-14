@@ -56,44 +56,84 @@ const FormProducto = ({onAgregar}) => {
     }; 
  
     return ( 
-        <form onSubmit={handleSubmit}> 
-            <h2>Agregar Producto</h2> 
-            <div> 
-                <label>Nombre:</label> 
-                <input 
-                    type="text" 
-                    name="nombre" 
-                    value={producto.nombre} 
-                    onChange={handleChange} 
-                    required 
-                /> 
-                {errores.nombre && <p style={{ color: 'red' }}>{errores.nombre}</p>} 
-            </div> 
-            <div> 
-                <label>Precio:</label> 
-                <input 
-                    type="number" 
-                    name="precio" 
-                    value={producto.precio} 
-                    onChange={handleChange}  
-                    required 
-                    min="0"
-                    step="any" 
-                /> 
-                {errores.precio && <p style={{ color: 'red' }}>{errores.precio}</p>} 
-            </div> 
-            <div> 
-                <label>Descripción:</label> 
-                <textarea 
-                name="descripcion" 
-                value={producto.descripcion} 
-                onChange={handleChange} 
-                required 
-                /> 
-                {errores.descripcion && <p style={{ color: 'red' }}>{errores.descripcion}</p>} 
-            </div> 
-            <button type="submit">Agregar Producto</button> 
-        </form> 
+
+        <>
+        <div className='container mb-5'>
+            <div className='row'>
+                <div className='col'>
+                    <h2 className='mb-4'>Agregar Producto</h2> 
+                    <form onSubmit={handleSubmit}> 
+                        <div className='row mb-3 g-3'> 
+                            <div className='col-auto'>
+                                <label className='col-sm-5 col-form-label' htmlFor='nombre'>
+                                    Nombre:
+                                </label>
+                            </div>
+                            <div className='col-auto'>
+                                <input 
+                                    type="text" 
+                                    name="nombre" 
+                                    value={producto.nombre} 
+                                    className='form-control'
+                                    onChange={handleChange} 
+                                    required 
+                                /> 
+                            </div>
+                            <div className='col-auto'>
+                                {errores.nombre && <p style={{ color: 'red' }} className='form-text'>{errores.nombre}</p>}                             
+                            </div>
+                        </div> 
+                        <div className='row mb-3 g-3'> 
+                            <div className='col-auto'>
+                                <label className='col-sm-5 col-form-label' htmlFor='precio'>
+                                    Precio:
+                                </label>
+                            </div> 
+                            <div className='col-auto'>
+                                <input 
+                                    type="number" 
+                                    name="precio" 
+                                    className='form-control'
+                                    value={producto.precio} 
+                                    onChange={handleChange}  
+                                    required 
+                                    min="0"
+                                    step="any" 
+                                /> 
+                            </div>
+                            <div className='col-auto'>
+                                {errores.precio && <p style={{ color: 'red' }} className='form-text'>{errores.precio}</p>} 
+                            </div>
+                        </div> 
+                        <div className='row mb-3 g-3'> 
+                            <div>
+                                <label className='col-sm-5 col-form-label' htmlFor='descripcion'>
+                                    Descripción:
+                                </label> 
+                            </div>
+                            <div className='col-auto'>
+                                <textarea 
+                                name="descripcion" 
+                                className='form-control'
+                                rows="6"
+                                cols="80"
+                                value={producto.descripcion} 
+                                onChange={handleChange} 
+                                required 
+                                /> 
+                            </div>
+                            <div className='col-auto'>
+                                {errores.descripcion && <p style={{ color: 'red' }} className='form-text'>{errores.descripcion}</p>} 
+                            </div>
+                        </div> 
+                        <div>
+                            <button type="submit" className="btn btn-primary px-4">Agregar Producto</button> 
+                        </div>
+                    </form> 
+                </div>
+            </div>
+        </div>
+        </>
   ); 
 }
 

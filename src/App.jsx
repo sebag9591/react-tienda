@@ -4,7 +4,9 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import { Route, Routes } from 'react-router-dom'
+import AdminHeader from './components/AdminHeader'
+import AdminFooter from './components/AdminFooter'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Inicio from './pages/Inicio'
 import Nosotros from './pages/Nosotros'
 import ProductoDetalle from './pages/ProductoDetalle'
@@ -16,9 +18,14 @@ import Login from "./pages/Login";
 function App() {
   const [count, setCount] = useState(0)
 
+  const location = useLocation(); // en qué ruta estoy
+
+
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <>
-        <Header />
+        {isAdminRoute ? <AdminHeader /> : <Header />}
         <Routes>
             <Route path={'/'} element={<Inicio />} />
             <Route path={'/nosotros'} element={<Nosotros />} />
@@ -37,7 +44,7 @@ function App() {
               }
             />
         </Routes>
-        <Footer />
+        {isAdminRoute ? '' : <Footer />}
     </>
   )
 }
