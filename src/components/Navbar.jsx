@@ -1,42 +1,41 @@
-import React from 'react';   
 import { NavLink } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 
-// Utilizo NavLink en los enlaces del navbar para que sea más facil el control de navegación y saber cual está activo
- 
-function Navbar() {   
-    const {user} = useAuthContext();
+const Navbar = () => {
+  const { user } = useAuthContext();
+  const esAdmin = user === 'admin';
 
-    const esAdmin = user === 'admin';
+  return (
+    <div className="collapse navbar-collapse order-lg-2" id="mainNavbar">
+      <ul className="navbar-nav mx-lg-auto mb-2 mb-lg-0">
 
-    return (   
-        <>
-            <nav>
-                <ul className='nav justify-content-center'>   
-                    <li className='nav-item'>
-                        <NavLink to={'/'} className={({ isActive }) => 
+        <li className="nav-item">
+          <NavLink to="/" className={({ isActive }) => 
                             "nav-link px-2 " + (isActive ? "link-body-emphasis fw-bold" : "link-body-emphasis")
-                        }>Inicio</NavLink>                        
-                    </li>  
+                        }>
+            Inicio
+          </NavLink>
+        </li>
 
-                    <li className='nav-item'>
-                        <NavLink to={'/nosotros'} className={({ isActive }) => 
+        <li className="nav-item">
+          <NavLink to="/nosotros" className={({ isActive }) => 
                             "nav-link px-2 " + (isActive ? "link-body-emphasis fw-bold" : "link-body-emphasis")
-                        }>Nosotros</NavLink>                        
-                    </li> 
+                        }>
+            Nosotros
+          </NavLink>
+        </li>
 
-                    {esAdmin && 
-                        <li className='nav-item'>
-                        <NavLink to={'/admin'} className={({ isActive }) => 
-                            "nav-link px-2 " + (isActive ? "link-body-emphasis fw-bold" : "link-body-emphasis")
-                        }>Admin</NavLink>                        
-                    </li> 
-                    }
-                    
-                </ul> 
-            </nav>
-        </>
-    );   
-}   
+        {esAdmin && (
+          <li className="nav-item">
+            <NavLink to="/admin" className="nav-link">
+              Admin
+            </NavLink>
+          </li>
+        )}
 
-export default Navbar
+      </ul>
+    </div>
+  );
+};
+
+export default Navbar;
