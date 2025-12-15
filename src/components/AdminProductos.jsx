@@ -74,21 +74,21 @@ const AdminProductos = () => {
                             <div className="card-body">
                                 <h5 className="card-title">{producto.nombre}</h5>
                                 <p className="card-text">{producto.descripcion}</p>
-                                <p className="card-text"><small class="text-body-secondary">Precio: ${producto.precio}</small></p>
+                                <p className="card-text"><small className="text-body-secondary">Precio: ${producto.precio}</small></p>
                                 {/* Botones para editar y eliminar este producto */}
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end" >
+                                <div className="d-grid gap-2 d-md-flex justify-content-md-end" >
                                     <button 
                                     className='btn  btn-outline-secondary' 
                                     onClick={() => abrirFormularioEditar(producto)}
                                     data-bs-toggle="modal" data-bs-target="#formProductoModal"
                                     >
-                                    <i class="bi bi-pencil-square"></i>
+                                    <i className="bi bi-pencil-square"></i>
                                     </button>
                                     <button 
                                         className='btn  btn-outline-danger'
                                         onClick={() => eliminarProducto(producto.id)}
                                     >
-                                    <i class="bi bi-trash"></i>
+                                    <i className="bi bi-trash"></i>
                                     </button>
                                 </div>
                                 

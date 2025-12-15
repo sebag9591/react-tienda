@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
+import  SearchBar  from './SearchBar';
 
 const Navbar = () => {
   const { user } = useAuthContext();
   const esAdmin = user === 'admin';
 
   return (
-    <div className="collapse navbar-collapse order-lg-2" id="mainNavbar">
+    <div className="collapse navbar-collapse order-lg-2 me-3" id="mainNavbar">
       <ul className="navbar-nav mx-lg-auto mb-2 mb-lg-0">
 
         <li className="nav-item">
@@ -32,8 +33,8 @@ const Navbar = () => {
             </NavLink>
           </li>
         )}
-
       </ul>
+      <SearchBar />
     </div>
   );
 };

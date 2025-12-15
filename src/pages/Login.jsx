@@ -12,11 +12,11 @@ const Login = () => {
     
         e.preventDefault();
         // Simulación de autenticación
-        if (user === 'admin' && password === '1234') {
-            login(user);
-            navigate('/admin');
+        if (login(user, password)) {
+          
+          navigate("/");
         } else {
-            alert('Credenciales incorrectas');
+          alert('Credenciales incorrectas ' + user + password);
         }
     };
     
@@ -25,7 +25,7 @@ const Login = () => {
   <div className="row justify-content-center">
     <div className="col-md-6">
 
-      <h1 className="text-center mb-4">Iniciar sesión</h1>
+      <h1 className="text-center mb-4 mt-5">Iniciar sesión</h1>
 
       <form onSubmit={handleSubmit}>
 

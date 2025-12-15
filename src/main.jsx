@@ -13,15 +13,18 @@ import { CarritoProvider } from './context/CarritoContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 //import { ProductoProvider } from './context/ProductoContext'; 
 import { ProductosProvider } from './context/ProductosContext'; 
+import { SearchProvider } from './context/SearchContext'; 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <ProductosProvider>
-          <CarritoProvider>
-            <App />
-          </CarritoProvider>
+          <SearchProvider>
+            <CarritoProvider>
+              <App />
+            </CarritoProvider>
+          </SearchProvider>
         </ProductosProvider>
       </AuthProvider>
     </BrowserRouter>

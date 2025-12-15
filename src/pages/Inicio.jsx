@@ -25,8 +25,6 @@ const Inicio = () => {
     return (   
         <>
         <Productos />
-        <hr />
-        <Carrito />
         </>
     );   
 }   

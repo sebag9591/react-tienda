@@ -14,6 +14,7 @@ import Carrito from './components/Carrito'
 import RutaProtegida from "./components/RutaProtegida"
 import Admin from "./components/Admin";
 import Login from "./pages/Login";
+import SearchResults from './components/SearchResults'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -31,7 +32,9 @@ function App() {
             <Route path={'/nosotros'} element={<Nosotros />} />
             <Route path="/login" element={<Login />} />
             <Route path={'/producto/:id'} element={<ProductoDetalle />} />
-            <Route path={"/carrito"}  element={
+            <Route path={'/busqueda'} element={<SearchResults />} />
+            <Route path={'/carrito'} element={<Carrito />} />
+            <Route path={"/carrito2"}  element={
                 <RutaProtegida >
                   <Carrito />
                 </RutaProtegida>

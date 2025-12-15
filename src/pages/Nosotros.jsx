@@ -5,7 +5,7 @@ const Nosotros = () => {
     
     return (
         <>
-            <div className="container mb-5">
+            <div className="container mb-5 mt-5">
                 <div className="text-center">
                     <h1>Nosotros</h1> 
                     <p>¡Bienvenido a <strong>react-tienda</strong>!</p>
