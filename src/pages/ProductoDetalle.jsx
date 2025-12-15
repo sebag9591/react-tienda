@@ -122,7 +122,12 @@ const ProductoDetalle = () => {
           style={{ aspectRatio: '1 / 1' }}
         >
           <img
-            src={producto.imagen}
+            src={
+                producto.imagen &&
+                (producto.imagen.startsWith('http://') || producto.imagen.startsWith('https://'))
+                ? producto.imagen
+                : '/react-tienda-logo.png'
+            }
             alt={producto.nombre}
             className="img-fluid w-100 h-100 object-fit-cover"
             style={{ transition: 'transform .3s' }}

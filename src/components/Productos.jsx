@@ -1,89 +1,125 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CarritoContext } from '../context/CarritoContext';   
+import { useProductosContext } from "../context/ProductosContext";
 
-// Le paso como parámetro la función que permite manejar estado del carrito
+// 
 const Productos = () => {
-    const [productos, setProductos] = useState([]);
-    const [cargando, setCargando] = useState(true);
-    const [error, setError] = useState(null);
-
-    // Usar el contexto
+    // uso de los contextos
+    const { productos, cargando, error } = useProductosContext();
+    
+    // Usar el contexto de carrito
     const {agregarProductoAlCarrito} = useContext(CarritoContext)
 
-    const apiURL = 'https://68d5d328e29051d1c0afa9ab.mockapi.io/producto';
+    // paginación
+    const productosPorPagina = 3; 
+    const [paginaActual, setPaginaActual] = useState(1);
 
-    useEffect(() => {
-        fetch(apiURL)
-            .then((respuesta) => respuesta.json())
-            .then((datos) => {
-                setProductos(datos);
-                setCargando(false);
-            })
-            .catch((error) => {
-                setError('Error al cargar tus productos');
-                setCargando(false);
-                console.error('Error:', error);
-            });
-    }, []);
+    if (cargando) return "Cargando productos...";
+    if (error) return error;
+
+    /// calculo del índice de los productos a mostrar
+    const indiceUltimoProducto = paginaActual * productosPorPagina;
+    const indicePrimerProducto = indiceUltimoProducto - productosPorPagina;
+    const productosActuales = productos.slice(indicePrimerProducto, indiceUltimoProducto);
+
+    // cambio de página
+    const totalPaginas = Math.ceil(productos.length / productosPorPagina);
+    const cambiarPagina = (numeroPagina) => setPaginaActual(numeroPagina);
 
     return (
-        <>
-            <div className="container mb-5 mt-5">
-                <div className="text-center">
-                    <h1>Productos</h1>
+        <div className="container mb-5 mt-5">
 
-                    {/* Mensajes de carga o error */}
-                    {cargando && <p>Cargando productos...</p>}
-                    {error && <p className="text-danger">{error}</p>}
-
-                    {/* Mostrar productos solo si no hay carga ni error */}
-                    {!cargando && !error && (
-                        <>
-                            {productos.length > 0 ? (
-                                <div className="row row-cols-1 row-cols-md-3 mb-5 g-4 text-center">
-                                    {productos.map((producto) => (
-                                        <div className="col" key={producto.id}>
-                                            <div className="card mb-3 h-100 p-3">
-                                                <div className="row g-2 h-100">
-                                                    <div className="col-md-4 d-flex align-items-center">
-                                                        <img
-                                                            src={producto.imagen}
-                                                            className="img-fluid rounded-start"
-                                                            alt={producto.nombre}
-                                                            style={{
-                                                                objectFit: 'contain',
-                                                                height: '100%',
-                                                                maxHeight: '200px',
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className="col-md-8 d-flex flex-column justify-content-between">
-                                                        <div className="card-body">
-                                                            <Link to={`/producto/${producto.id}`} className='card-text px-2 link-body-emphasis link-offset-2 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-50-hover'>{producto.title}</Link> 
-                                                            <h3 className="card-text">${producto.precio}</h3>
-                                                            <button
-                                                                className="w-100 btn btn-primary mt-auto"
-                                                                onClick={() => agregarProductoAlCarrito(producto)}
-                                                            >
-                                                                <i className="bi bi-cart-plus" /> Agregar al carrito
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p>No hay productos disponibles.</p>
-                            )}
-                        </>
-                    )}
-                </div>
+            {/* Título */}
+            <div className="text-center mb-4">
+            <h1>Productos</h1>
             </div>
-        </>
-    );
+
+            {/* Mensajes de carga o error */}
+            {cargando && <p className="text-center">Cargando productos...</p>}
+            {error && <p className="text-danger text-center">{error}</p>}
+
+            {!cargando && !error && (
+            <>
+                {productos.length > 0 ? (
+                <>
+                    {/* Grilla de productos */}
+                    <div className="row g-4">
+                    {productosActuales.map((producto) => (
+                        <div className="col-12 col-sm-6 col-lg-4" key={producto.id}>
+                        <div className="card h-100 shadow-sm">
+
+                            <img
+                            src={
+                                producto.imagen &&
+                                (producto.imagen.startsWith("http://") ||
+                                producto.imagen.startsWith("https://"))
+                                ? producto.imagen
+                                : "/react-tienda-logo.png"
+                            }
+                            alt={producto.nombre}
+                            className="card-img-top img-fluid"
+                            style={{
+                                objectFit: "contain",
+                                height: "220px",
+                                backgroundColor: "#f8f9fa",
+                            }}
+                            />
+
+                            <div className="card-body d-flex flex-column">
+                            <h6 className="card-title text-center">
+                                <Link
+                                to={`/producto/${producto.id}`}
+                                className="text-decoration-none text-dark"
+                                >
+                                {producto.nombre}
+                                </Link>
+                            </h6>
+
+                            <p className="fw-semibold text-center mb-3">
+                                ${producto.precio}
+                            </p>
+
+                            <button
+                                className="btn btn-dark mt-auto w-100"
+                                onClick={() => agregarProductoAlCarrito(producto)}
+                            >
+                                <i className="bi bi-cart-plus me-2"></i>
+                                Agregar al carrito
+                            </button>
+                            </div>
+
+                        </div>
+                        </div>
+                    ))}
+                    </div>
+
+                    {/* PAGINACIÓN */}
+                    <div className="d-flex justify-content-center gap-2 mt-5 flex-wrap pb-5">
+                    {Array.from({ length: totalPaginas }, (_, index) => (
+                        <button
+                        key={index + 1}
+                        className={
+                            paginaActual === index + 1
+                            ? "btn btn-dark"
+                            : "btn btn-outline-dark"
+                        }
+                        onClick={() => cambiarPagina(index + 1)}
+                        >
+                        {index + 1}
+                        </button>
+                    ))}
+
+
+                    </div>
+                </>
+                ) : (
+                <p className="text-center">No hay productos disponibles.</p>
+                )}
+            </>
+            )}
+        </div>
+        );
 };
 
 export default Productos;

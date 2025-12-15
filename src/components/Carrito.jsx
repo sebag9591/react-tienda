@@ -75,7 +75,7 @@ const Carrito = () => {
     }
 
     return (   
-        <div className='container mb-5 mt-5 ' style={{ paddingBottom: "30px" }}>
+        <div className='container mb-5 mt-5 ' >
             <h1 id='carrito' className='text-center'>Carrito</h1>
 
             {carrito.length === 0 ? (
@@ -100,7 +100,12 @@ const Carrito = () => {
                             {/* Imagen */}
                             <div className="flex-shrink-0">
                                 <img
-                                src={producto.imagen}
+                                src={
+                                producto.imagen &&
+                                (producto.imagen.startsWith('http://') || producto.imagen.startsWith('https://'))
+                                ? producto.imagen
+                                : '/react-tienda-logo.png'
+                            }
                                 alt={producto.nombre}
                                 className="img-fluid rounded"
                                 style={{

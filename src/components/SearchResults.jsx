@@ -28,7 +28,12 @@ const SearchResults = () => {
                 >
                     <div className="card h-100">
                     <img
-                        src={producto.imagen}
+                        src={
+                                producto.imagen &&
+                                (producto.imagen.startsWith('http://') || producto.imagen.startsWith('https://'))
+                                ? producto.imagen
+                                : '/react-tienda-logo.png'
+                            }
                         alt={producto.nombre}
                         className="card-img-top object-fit-cover"
                         style={{ height: "320px" }}
