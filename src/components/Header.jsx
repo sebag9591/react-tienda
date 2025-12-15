@@ -38,11 +38,11 @@ const Header = () => {
           <div className="d-flex align-items-center gap-3 order-lg-3">
 
             {estaLogeado ? (
-              <button onClick={logout} className="btn btn-link p-0">
+              <button onClick={logout} className="btn btn-link p-0 text-dark">
                 Cerrar sesión
               </button>
             ) : (
-              <Link to="/login" className="btn btn-link p-0">
+              <Link to="/login" className="btn btn-link p-0 text-dark">
                 Iniciar sesión
               </Link>
             )}

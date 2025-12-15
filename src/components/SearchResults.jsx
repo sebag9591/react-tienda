@@ -1,68 +1,133 @@
 import { useSearch } from "../context/SearchContext";
 import { useProductosContext } from "../context/ProductosContext";
+import { CarritoContext } from "../context/CarritoContext";
 import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 
 const SearchResults = () => {
-  // usamos los contextos de busqueda y productos.
   const { search } = useSearch();
   const { productos } = useProductosContext();
+  const { agregarProductoAlCarrito } = useContext(CarritoContext);
 
+  // paginación
+  const productosPorPagina = 3;
+  const [paginaActual, setPaginaActual] = useState(1);
+
+  // filtrar productos
   const productosFiltrados = productos.filter((producto) =>
     producto.nombre.toLowerCase().includes(search.toLowerCase())
   );
 
+  // resetear página cuando cambia la búsqueda
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [search]);
+
+  // cálculo de productos actuales
+  const indiceUltimoProducto = paginaActual * productosPorPagina;
+  const indicePrimerProducto = indiceUltimoProducto - productosPorPagina;
+
+  const productosActuales = productosFiltrados.slice(
+    indicePrimerProducto,
+    indiceUltimoProducto
+  );
+
+  const totalPaginas = Math.ceil(
+    productosFiltrados.length / productosPorPagina
+  );
+
   return (
-    <>
-    <div className="container py-5">
-        <h2 className="fw-bold mb-4">
-            Productos
-        </h2>
+    <div className="container mb-5 mt-5">
 
-        <div className="row g-4">
-            {productosFiltrados.length > 0 ? (
-            <>
-                {productosFiltrados.map((producto) => (
-                <div
-                    key={producto.id}
-                    className="col-12 col-sm-6 col-lg-3"
-                >
-                    <div className="card h-100">
-                    <img
-                        src={
-                                producto.imagen &&
-                                (producto.imagen.startsWith('http://') || producto.imagen.startsWith('https://'))
-                                ? producto.imagen
-                                : '/react-tienda-logo.png'
-                            }
-                        alt={producto.nombre}
-                        className="card-img-top object-fit-cover"
-                        style={{ height: "320px" }}
-                    />
+      {/* Título */}
+      <div className="text-center mb-4">
+        <h1>Resultados de búsqueda</h1>
+        
+      </div>
 
-                    <div className="card-body d-flex justify-content-between align-items-start">
-                        <h5 className="card-title fs-6 mb-0">
-                        <Link
-                            to={`/producto/${producto.id}`}
-                            className="text-decoration-none text-dark"
-                        >
-                            {producto.nombre}
-                        </Link>
-                        </h5>
+      {productosFiltrados.length > 0 ? (
+        <>
+          {/* Grilla de productos */}
+          <div className="row g-4">
+            {productosActuales.map((producto) => (
+              <div
+                className="col-12 col-sm-6 col-lg-4"
+                key={producto.id}
+              >
+                <div className="card h-100 shadow-sm">
 
-                        <span className="fw-semibold text-dark">
-                        ${producto.precio}
-                        </span>
-                    </div>
-                    </div>
+                  <img
+                    src={
+                      producto.imagen &&
+                      (producto.imagen.startsWith("http://") ||
+                        producto.imagen.startsWith("https://"))
+                        ? producto.imagen
+                        : "/react-tienda-logo.png"
+                    }
+                    alt={producto.nombre}
+                    className="card-img-top img-fluid"
+                    style={{
+                      objectFit: "contain",
+                      height: "220px",
+                      backgroundColor: "#f8f9fa",
+                    }}
+                  />
+
+                  <div className="card-body d-flex flex-column">
+                    <h6 className="card-title text-center">
+                      <Link
+                        to={`/producto/${producto.id}`}
+                        className="text-decoration-none text-dark"
+                      >
+                        {producto.nombre}
+                      </Link>
+                    </h6>
+
+                    <p className="fw-semibold text-center mb-3">
+                      ${producto.precio}
+                    </p>
+
+                    <button
+                      className="btn btn-dark mt-auto w-100"
+                      onClick={() =>
+                        agregarProductoAlCarrito(producto)
+                      }
+                    >
+                      <i className="bi bi-cart-plus me-2"></i>
+                      Agregar al carrito
+                    </button>
+                  </div>
+
                 </div>
-                ))}
-            </>
-            ) : (
-            <p>No hay productos que coincidan con la búsqueda.</p>
-            )}
-        </div>
+              </div>
+            ))}
+          </div>
+
+          {/* PAGINACIÓN */}
+          {totalPaginas > 1 && (
+            <div className="d-flex justify-content-center gap-2 mt-5 flex-wrap">
+              {Array.from({ length: totalPaginas }, (_, index) => (
+                <button
+                  key={index + 1}
+                  className={
+                    paginaActual === index + 1
+                      ? "btn btn-dark"
+                      : "btn btn-outline-dark"
+                  }
+                  onClick={() => setPaginaActual(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <p className="text-center">
+          No hay productos que coincidan con la búsqueda.
+        </p>
+      )}
     </div>
-    </>
   );
 };
 

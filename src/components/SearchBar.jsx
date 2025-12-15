@@ -6,14 +6,15 @@ const SearchBar = () => {
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
-    const search = e.target.value;
-    setSearch(search);
+    const value = e.target.value;
+    setSearch(value);
 
-    // Si hay texto, navegar a la página de búsqueda
-    if (search.trim()) {
-      navigate("/busqueda");
+    if (value.trim() === "") {
+        navigate("/");          // volver al inicio
+    } else {
+        navigate("/busqueda");  // ir a resultados
     }
-  };
+    };
 
   return (
     <>
