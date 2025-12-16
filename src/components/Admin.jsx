@@ -1,35 +1,16 @@
 import FormProducto from "./FormProducto";
 import AdminSidebar from "./AdminSidebar";
 import AdminProductos from "./AdminProductos";
+import { Helmet } from "react-helmet-async";
 
 const Admin = () => {
-  const API = 'https://68d5d328e29051d1c0afa9ab.mockapi.io/producto';
-
-  const agregarProducto = async (producto) => {
-    try {
-      const respuesta = await fetch(API, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(producto)
-      });
-
-      if (!respuesta.ok) 
-        throw new Error("Error al agregar el producto.");
-
-      const dato = await respuesta.json();
-      console.log("Producto agregado: ", dato);
-      alert("El producto ha sido agregado correctamente");
-
-    } catch (error) {
-        console.error(error.message);
-        alert("Hubo un problema al agregar el producto.");
-    }
-  };
-
+  
   return (
     <>
+    <Helmet>
+      <title>Panel Admin | Gestión de Productos</title>
+      <meta name="robots" content="noindex, nofollow" />
+    </Helmet>
     <div className='container-fluid'>
       <div className='row'>
         

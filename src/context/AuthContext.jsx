@@ -28,14 +28,19 @@ export const AuthProvider = ({ children }) => {
     // estado que maneja al usuario
     const [user, setUser] = useState(null); 
 
+    
+    const [loading, setLoading] = useState(true);
+
     // si el usuario ya está logueado cuando la página se recarga
     useEffect(() => {
         const storedToken = localStorage.getItem('authToken');
         const storedUser = localStorage.getItem('user');
+        
 
         if (storedToken && storedUser) {
             setUser(storedUser);
         }
+        setLoading(false);
     }, []);
   
     const login = (username, password) => { 
@@ -62,7 +67,7 @@ export const AuthProvider = ({ children }) => {
     }; 
 
     return ( 
-            <AuthContext.Provider value={{ user, login, logout }}> 
+            <AuthContext.Provider value={{ user, login, logout, loading}}> 
                 {children} 
             </AuthContext.Provider> 
     ); 

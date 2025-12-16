@@ -38,21 +38,7 @@ const Carrito = () => {
             >
                 <div className="text-center">
 
-                    <svg
-                    width="96"
-                    height="96"
-                    className="d-block mx-auto mb-4 text-secondary"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                    />
-                    </svg>
+                    <i className="bi bi-cart-x fs-1 text-secondary d-block mx-auto mb-3"></i>
 
                     <h2 className="fw-bold fs-3 text-dark mb-2">
                     Tu carrito está vacío
@@ -66,7 +52,7 @@ const Carrito = () => {
                     href="/"
                     className="btn btn-dark px-4 py-2 fw-semibold"
                     >
-                    Ir a comprar
+                    Ver productos
                     </a>
 
                 </div>
@@ -193,7 +179,7 @@ const Carrito = () => {
                     <div className="border rounded p-4 sticky-top" style={{ top: '1rem' }}>
 
                         <h2 className="h5 fw-bold mb-4">
-                        Resumen del Pedido
+                        Resumen del pedido
                         </h2>
 
                         <div className="mb-4">
@@ -228,7 +214,7 @@ const Carrito = () => {
                         </div>
 
                         <button className="btn btn-dark w-100 py-3 fw-semibold">
-                        Proceder al Pago
+                        Proceder al pago
                         </button>
 
                     </div>

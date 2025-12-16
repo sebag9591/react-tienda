@@ -50,7 +50,7 @@ const Header = () => {
             <Link to="/carrito" className="btn position-relative p-0">
               <i className="bi bi-cart fs-5"></i>
               {contadorEnCarrito > 0 && (
-                <span className="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                <span className="badge bg-dark position-absolute top-0 start-100 translate-middle">
                   {contadorEnCarrito}
                 </span>
               )}

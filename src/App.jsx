@@ -33,8 +33,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path={'/producto/:id'} element={<ProductoDetalle />} />
             <Route path={'/busqueda'} element={<SearchResults />} />
-            <Route path={'/carrito'} element={<Carrito />} />
-            <Route path={"/carrito2"}  element={
+            <Route path={"/carrito"}  element={
                 <RutaProtegida >
                   <Carrito />
                 </RutaProtegida>

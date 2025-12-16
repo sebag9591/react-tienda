@@ -14,19 +14,22 @@ import { AuthProvider } from './context/AuthContext.jsx';
 //import { ProductoProvider } from './context/ProductoContext'; 
 import { ProductosProvider } from './context/ProductosContext'; 
 import { SearchProvider } from './context/SearchContext'; 
+import { HelmetProvider } from "react-helmet-async";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <ProductosProvider>
-          <SearchProvider>
-            <CarritoProvider>
-              <App />
-            </CarritoProvider>
-          </SearchProvider>
-        </ProductosProvider>
-      </AuthProvider>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <ProductosProvider>
+            <SearchProvider>
+              <CarritoProvider>
+                <App />
+              </CarritoProvider>
+            </SearchProvider>
+          </ProductosProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   </StrictMode>,
 );

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate} from "react-router-dom";
 import { useProductosContext } from "../context/ProductosContext";
 import { CarritoContext } from "../context/CarritoContext";
+import { Helmet } from 'react-helmet-async';
 
 
 const ProductoDetalle = () => {
@@ -71,21 +72,7 @@ const ProductoDetalle = () => {
         <div className="d-flex align-items-center justify-content-center px-3" style={{ minHeight: '60vh' }}>
             <div className="text-center">
 
-                <svg
-                width="32"
-                height="32"
-                className="d-block mx-auto mb-3 text-secondary"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                >
-                <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-                </svg>
+                <i className="bi bi-emoji-dizzy fs-1 text-secondary d-block mx-auto mb-3"></i>
 
                 <h2 className="fw-bold fs-3 text-dark mb-2">
                 Producto no encontrado
@@ -109,6 +96,13 @@ const ProductoDetalle = () => {
 
     return(
         <>
+        <Helmet>
+          <title>{producto.nombre} | React Tienda</title>
+          <meta
+            name="description"
+            content={`Comprá ${producto.nombre} al mejor precio. ${producto.descripcion}`}
+          />
+        </Helmet>
         <div className="container py-4">
   
   {/* Contenido principal */}
@@ -146,21 +140,12 @@ const ProductoDetalle = () => {
           {producto.nombre}
         </h1>
 
-        {/* Categoría */}
-        {producto.categoria && (
-          <span className="badge bg-secondary text-light mb-4">
-            {producto.categoria}
-          </span>
-        )}
-
-        {/* Precio */}
         <div className="my-4">
           <p className="fw-bold display-5 text-dark mb-0">
             ${producto.precio?.toLocaleString('es-AR')}
           </p>
         </div>
 
-        {/* Descripción */}
         <div className="mb-4">
           <h2 className="h5 fw-semibold text-dark mb-2">
             Descripción
@@ -177,7 +162,6 @@ const ProductoDetalle = () => {
 
         <div className="d-flex flex-column flex-sm-row gap-3">
 
-          {/* Agregar al carrito */}
           <button
             onClick={handleAgregarAlCarrito}
             className={`btn ${
@@ -200,7 +184,6 @@ const ProductoDetalle = () => {
             )}
           </button>
 
-          {/* Ver carrito */}
           <button
             onClick={() => navigate('/carrito')}
             className="btn btn-outline-dark py-3 fw-semibold"
