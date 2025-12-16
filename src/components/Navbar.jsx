@@ -29,7 +29,7 @@ const Navbar = () => {
         {esAdmin && (
           <li className="nav-item">
             <NavLink to="/admin" className="btn btn-outline-dark">
-              <i class="bi bi-gear"></i> Administración
+              <i className="bi bi-gear"></i> Administración
             </NavLink>
           </li>
         )}

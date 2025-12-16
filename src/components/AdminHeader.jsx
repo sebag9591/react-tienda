@@ -16,10 +16,20 @@ const AdminHeader = () => {
         <>
         <div>
             <header
-                className="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow"
+                className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
                 data-bs-theme="dark"
             >
-                <Link to={'/admin'} className='navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white'>
+                {/* Botón hamburguesa SOLO en mobile */}
+                <button
+                    className="navbar-toggler d-md-none ms-2"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#adminSidebarOffcanvas"
+                    aria-controls="adminSidebarOffcanvas"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <Link to={'/'} className='navbar-brand px-3 fs-5 text-white'>
                     <span className='fs-4'>react-tienda</span>
                 </Link> 
             </header> 

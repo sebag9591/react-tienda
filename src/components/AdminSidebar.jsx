@@ -1,58 +1,72 @@
-import React, { useContext } from 'react';   
-import Navbar from './Navbar';
-import { Link } from 'react-router-dom';
-import { useAuthContext } from '../context/AuthContext';
-import { CarritoContext } from '../context/CarritoContext';
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
 
 const AdminSidebar = () => {
-
-    const { carrito } = useContext(CarritoContext);
-        const {user, logout} = useAuthContext();
-        const estaLogeado = !!user;
-        const contadorEnCarrito = carrito.length;
+  const { user, logout } = useAuthContext();
 
   return (
-    <div className="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
-
-      <div
-        className="offcanvas-md offcanvas-end bg-body-tertiary"
-        tabIndex="-1"
-        id="sidebarMenu"
-        aria-labelledby="sidebarMenuLabel"
+    <div
+      className="d-flex flex-column p-3 text-bg-dark"
+      style={{ width: "280px", minHeight: "100vh" }}
+    >
+      {/* TÍTULO */}
+      <Link
+        to="/admin"
+        className="d-flex align-items-center mb-3 text-white text-decoration-none"
       >
-        {/* Body */}
-        <div className=" d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+        <i className="bi bi-gear fs-4 me-2"></i>
+        <span className="fs-4">Administración</span>
+      </Link>
 
-          {/* Menu principal */}
-          <Link to={'/admin'} className='btn d-flex align-items-center gap-2'>
-            <i className="bi bi-cart  position-relative">
-            
-            </i> 
-             Productos
-        </Link>
+      <hr />
 
-          
+      {/* MENÚ */}
+      <ul className="nav nav-pills flex-column">
+        <li className="nav-item">
+          <NavLink
+            to="/admin"
+            end
+            className={({ isActive }) =>
+              `nav-link ${isActive ? "active bg-secondary" : "text-white"}`
+            }
+          >
+            <i className="bi bi-box-seam me-2"></i>
+            Productos
+          </NavLink>
+        </li>
+      </ul>
 
-          <hr className="my-3" />
+      {/* USUARIO (CERCA DEL MENÚ) */}
+      <div className="dropdown mt-3">
+        <button
+          className="btn btn-dark dropdown-toggle d-flex align-items-center w-100"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            src="/react-tienda-logo.png"
+            alt="admin"
+            width="32"
+            height="32"
+            className="rounded-circle me-2"
+          />
+          <strong className="text-truncate">{user}</strong>
+        </button>
 
-          {/* Settings / Sign out */}
-          <ul className="nav flex-column mb-auto">
-            <li className="nav-item">
-                { estaLogeado ? 
-                    <button onClick={logout} className='btn btn-link'>Cerrar Sesion </button> 
-                    :
-                    <Link to="/login">
-                        <button className='btn btn-link'>Iniciar sesión</button>
-                    </Link>
-                }
-            </li>
-          </ul>
-
-        </div>
+        <ul className="dropdown-menu dropdown-menu-dark w-100 shadow">
+          <li>
+            <button
+              className="dropdown-item"
+              onClick={logout}
+            >
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
       </div>
-
     </div>
   );
-}
+};
 
-export default AdminSidebar;   
+export default AdminSidebar;

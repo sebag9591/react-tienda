@@ -1,125 +1,151 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import FormProducto from "./FormProducto";
 import { useProductosContext } from "../context/ProductosContext";
-//import styles from './GestionProducto.module.css';
-//import CirclePlus from "../assets/CirclePlus";
-//import SquarePen from "../assets/SquarePen";
-//import TrashIcon from "../assets/TrashIcon";
 
 const AdminProductos = () => {
-  // Contexto de producto
   const { productos, eliminarProducto } = useProductosContext();
 
-  // Estados 
   const [mostrarForm, setMostrarForm] = useState(false);
   const [modoFormulario, setModoFormulario] = useState("agregar");
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
 
-  // Abrir formulario para AGREGAR
+  /* PAGINACIÓN */
+  const productosPorPagina = 5;
+  const [paginaActual, setPaginaActual] = useState(1);
+
+  const indiceUltimoProducto = paginaActual * productosPorPagina;
+  const indicePrimerProducto = indiceUltimoProducto - productosPorPagina;
+  const productosActuales = productos.slice(
+    indicePrimerProducto,
+    indiceUltimoProducto
+  );
+
+  const totalPaginas = Math.ceil(productos.length / productosPorPagina);
+  const cambiarPagina = (pagina) => setPaginaActual(pagina);
+
+  /* FORMULARIOS */
   const abrirFormularioAgregar = () => {
     setModoFormulario("agregar");
-    setProductoSeleccionado(null); // Sin producto inicial
+    setProductoSeleccionado(null);
     setMostrarForm(true);
   };
-  
 
-  // Abrir formulario para EDITAR
   const abrirFormularioEditar = (producto) => {
     setModoFormulario("editar");
-    setProductoSeleccionado(producto); // Pasar el producto a editar
+    setProductoSeleccionado(producto);
     setMostrarForm(true);
   };
 
-  // Cerrar formulario
   const cerrarFormulario = () => {
     setMostrarForm(false);
     setProductoSeleccionado(null);
   };
 
-  
-
-
   return (
-    <div className='container-fluid'>
-        <div className='row mb-3'>
-            <div className='col-sm-3'>
-            <h2>Lista de Productos</h2>
-            </div>
-            <div className="col-auto">
-                <button
-                onClick={abrirFormularioAgregar}
-                className='btn btn-primary'
-                data-bs-toggle='modal'
-                data-bs-target="#formProductoModal"
-                >
-                <i className="bi bi-plus-circle  position-relative" /> Agregar Producto
-                </button>
-            </div>
-        </div>
-        {/* Lista de productos */}
-        <div className="row mb-3">
-          {productos.length === 0 ? (
-            <p>No se ha cargado ningún producto</p>
-          ) : (
-            <div className="col-sm-6">
-                
-              {productos.map((producto) => (
+    <div className="container-fluid">
 
-                <div className="card m-b3" key={producto.id}>
-                    <div className="row g-0">
-                        <div className="col-md-4">
-                        <img src={
-                                producto.imagen &&
-                                (producto.imagen.startsWith('http://') || producto.imagen.startsWith('https://'))
-                                ? producto.imagen
-                                : '/react-tienda-logo.png'
-                            } className="img-fluid rounded-start" alt={producto.nombre} />
-                        </div>
-                        <div className="col-md-8">
-                            <div className="card-body">
-                                <h5 className="card-title">{producto.nombre}</h5>
-                                <p className="card-text">{producto.descripcion}</p>
-                                <p className="card-text"><small className="text-body-secondary">Precio: ${producto.precio}</small></p>
-                                {/* Botones para editar y eliminar este producto */}
-                                <div className="d-grid gap-2 d-md-flex justify-content-md-end" >
-                                    <button 
-                                    className='btn  btn-outline-secondary' 
-                                    onClick={() => abrirFormularioEditar(producto)}
-                                    data-bs-toggle="modal" data-bs-target="#formProductoModal"
-                                    >
-                                    <i className="bi bi-pencil-square"></i>
-                                    </button>
-                                    <button 
-                                        className='btn  btn-outline-danger'
-                                        onClick={() => eliminarProducto(producto.id)}
-                                    >
-                                    <i className="bi bi-trash"></i>
-                                    </button>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-              ))}
-            </div>
-          )}
-        </div>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="mb-0">Productos</h2>
 
-        {/* Modal - Formulario condicional */}
-        {mostrarForm && (
-          <>
-              {/* Pasar los props correctos según el modo */}
-              <FormProducto
-                productoInicial={productoSeleccionado || {}}
-                modo={modoFormulario}
-                onCerrar={cerrarFormulario}
-              />
-          </>
-        )}
+        <button
+          onClick={abrirFormularioAgregar}
+          className="btn btn-dark"
+          //data-bs-toggle="modal"
+          //data-bs-target="#formProductoModal"
+        >
+          <i className="bi bi-plus-circle me-2"></i>
+          Agregar producto
+        </button>
       </div>
-    
+
+      {/* LISTADO */}
+      {productos.length === 0 ? (
+        <p>No hay productos cargados</p>
+      ) : (
+        <ul className="list-group">
+
+          {productosActuales.map((producto) => (
+            <li
+              key={producto.id}
+              className="list-group-item d-flex align-items-center justify-content-between"
+            >
+              {/* INFO */}
+              <div className="d-flex align-items-center gap-3">
+                <img
+                  src={
+                    producto.imagen &&
+                    (producto.imagen.startsWith("http://") ||
+                      producto.imagen.startsWith("https://"))
+                      ? producto.imagen
+                      : "/react-tienda-logo.png"
+                  }
+                  alt={producto.nombre}
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    objectFit: "contain",
+                  }}
+                />
+
+                <div>
+                  <strong>{producto.nombre}</strong>
+                  <div className="text-muted small">
+                    ${producto.precio}
+                  </div>
+                </div>
+              </div>
+
+              <div className="btn-group">
+                <button
+                  className="btn btn-outline-dark btn-sm"
+                  onClick={() => abrirFormularioEditar(producto)}
+                  //data-bs-toggle="modal"
+                  //data-bs-target="#formProductoModal"
+                >
+                  <i className="bi bi-pencil"></i>
+                </button>
+
+                <button
+                  className="btn btn-outline-danger btn-sm"
+                  onClick={() => eliminarProducto(producto.id)}
+                >
+                  <i className="bi bi-trash"></i>
+                </button>
+              </div>
+            </li>
+          ))}
+
+        </ul>
+      )}
+
+      {/* PAGINACIÓN */}
+      {totalPaginas > 1 && (
+        <div className="d-flex justify-content-center gap-2 mt-4 flex-wrap">
+          {Array.from({ length: totalPaginas }, (_, index) => (
+            <button
+              key={index + 1}
+              className={
+                paginaActual === index + 1
+                  ? "btn btn-dark"
+                  : "btn btn-outline-dark"
+              }
+              onClick={() => cambiarPagina(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* MODAL FORM */}
+      {mostrarForm && (
+        <FormProducto
+          productoInicial={productoSeleccionado || {}}
+          modo={modoFormulario}
+          onCerrar={cerrarFormulario}
+        />
+      )}
+    </div>
   );
 };
 

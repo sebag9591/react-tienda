@@ -16,7 +16,7 @@ const Login = () => {
           
           navigate("/");
         } else {
-          alert('Credenciales incorrectas ' + user + password);
+          alert('Credenciales incorrectas');
         }
     };
     

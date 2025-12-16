@@ -28,6 +28,13 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
         { 
             nuevosErrores.descripcion = 'La descripción debe tener al menos 10 caracteres.'; 
         } 
+
+        if (producto.imagen && 
+            !producto.imagen.startsWith("http://") &&
+            !producto.imagen.startsWith("https://")
+            ) {
+                nuevosErrores.imagen = "La imagen debe ser una URL válida (http o https).";
+            }
         
         setErrores(nuevosErrores); 
         return Object.keys(nuevosErrores).length === 0; 
@@ -35,7 +42,7 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
  
     const handleSubmit = async (e) => { 
         e.preventDefault(); 
-        if (!validarForm) 
+        if (!validarForm()) 
             return;
         
         if (modo === "agregar") {
@@ -50,7 +57,7 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
     return ( 
 
         <>
-        <div className="modal" tabIndex="-1" aria-modal="true" role='dialog' id='formProductoModal' aria-labelledby="formProductoLabel" aria-hidden="true">
+        <div className="modal show d-block" tabIndex="-1" role='dialog' id='formProductoModal' >
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -105,6 +112,28 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
                                     {errores.precio && <p style={{ color: 'red' }} className='form-text'>{errores.precio}</p>} 
                                 </div>
                             </div> 
+
+                            <div className='row mb-3 g-3'> 
+                                <div className='col-auto'>
+                                    <label className='col-sm-5 col-form-label' htmlFor='imagen'>
+                                        Imagen:
+                                    </label>
+                                </div>
+                                <div className='col-auto'>
+                                    <input 
+                                        type="text" 
+                                        name="imagen" 
+                                        value={producto.imagen || ""} 
+                                        className='form-control'
+                                        placeholder='URL de la imagen'
+                                        onChange={handleChange} 
+                                    /> 
+                                </div>
+                                <div className='col-auto'>
+                                    {errores.imagen && <p style={{ color: 'red' }} className='form-text'>{errores.imagen}</p>}                             
+                                </div>
+                            </div> 
+                            
                             <div className='row mb-3 g-3'> 
                                 <div>
                                     <label className='col-sm-5 col-form-label' htmlFor='descripcion'>
@@ -128,13 +157,15 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
                             </div> 
                             <div  className="modal-footer">
                                 <button type="submit" className="btn btn-primary px-4">{modo === "agregar" ? <>Agregar</> : <>Actualizar</>}</button> 
-                                <button type="button" className="btn btn-secondary" onClick={onCerrar} data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" className="btn btn-secondary" onClick={onCerrar} >Cancelar</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        {/* Backdrop */}
+        <div className="modal-backdrop fade show"></div>
         </>
   ); 
 }
